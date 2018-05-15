@@ -75,7 +75,7 @@ public class StatusBarUtil {
     }
 
     /**
-     * 设置全屏状态
+     * 设置全屏状态 并隐藏底部虚拟按钮
      *
      * @param activity
      */
@@ -83,8 +83,38 @@ public class StatusBarUtil {
         activity.getWindow().setFlags(
                 WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        //隐藏底部虚拟按钮
+        hideBottomNavigation(activity);
+    }
+
+    /**
+     * 设置全屏状态 至少透明虚拟按钮 并不隐藏
+     *
+     * @param activity
+     */
+    public static void fullScreenTranslucentNavigation(Activity activity) {
+        activity.getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         //底部导航栏透明
         activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+    }
+
+    /**
+     * 隐藏虚拟按键，并且全屏
+     */
+    public static void hideBottomNavigation(Activity activity) {
+        View decorView = activity.getWindow().getDecorView();
+        //隐藏虚拟按键，并且全屏
+        if (Build.VERSION.SDK_INT > 11 && Build.VERSION.SDK_INT < 19) { // lower api
+            decorView = activity.getWindow().getDecorView();
+            decorView.setSystemUiVisibility(View.GONE);
+        } else if (Build.VERSION.SDK_INT >= 19) {
+            //for new api versions.
+            int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_FULLSCREEN;
+            decorView.setSystemUiVisibility(uiOptions);
+        }
     }
 
     /**
