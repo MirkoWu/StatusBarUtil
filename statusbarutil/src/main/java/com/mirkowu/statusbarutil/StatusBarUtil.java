@@ -78,8 +78,18 @@ public class StatusBarUtil {
      * 设置全屏状态 并隐藏底部虚拟按钮
      *
      * @param activity
+     * @Deprecated 修改方法名 {@link StatusBarUtil#setFullScreen(Activity)}
      */
+    @Deprecated
     public static void fullScreen(Activity activity) {
+        activity.getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        //隐藏底部虚拟按钮
+        hideBottomNavigation(activity);
+    }
+
+    public static void setFullScreen(Activity activity) {
         activity.getWindow().setFlags(
                 WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -91,8 +101,18 @@ public class StatusBarUtil {
      * 设置全屏状态 至少透明虚拟按钮 并不隐藏
      *
      * @param activity
+     * @Deprecated 修改方法名 {@link StatusBarUtil#setFullScreenTranslucentNavigation(Activity)}
      */
+    @Deprecated
     public static void fullScreenTranslucentNavigation(Activity activity) {
+        activity.getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        //底部导航栏透明
+        activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+    }
+
+    public static void setFullScreenTranslucentNavigation(Activity activity) {
         activity.getWindow().setFlags(
                 WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
