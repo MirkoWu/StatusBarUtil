@@ -3,6 +3,7 @@ package com.mirkowu.statusbarutil;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.ColorInt;
@@ -25,12 +26,11 @@ import java.lang.reflect.Method;
  */
 
 public class StatusBarUtil {
+    /*** 默认半透明状态栏 的透明度 **/
+    public static final int DEFAULT_STATUS_BAR_ALPHA = 0;
     private static final int FAKE_STATUS_BAR_VIEW_ID = R.id.statusbarutil_fake_status_bar_view;
     private static final int FAKE_TRANSLUCENT_VIEW_ID = R.id.statusbarutil_translucent_view;
     private static final int TAG_KEY_HAVE_SET_OFFSET = -123;
-    /*** 默认半透明状态栏 的透明度 **/
-    public static final int DEFAULT_STATUS_BAR_ALPHA = 0;
-
 
     /**
      * 沉浸式透明状态栏 将页面顶到屏幕最顶端 且 状态栏完全透明
@@ -649,30 +649,53 @@ public class StatusBarUtil {
         return 0xff << 24 | red << 16 | green << 8 | blue;
     }
 
+
     /**
-     * 设置增加一个statusbar 高度的padding
+     * 设置增加一个statusbar 高度的Toppadding
      *
-     * @param v
+     * @param view
      */
-    public static void setStatusBarPadding(Context context, View v) {
+    public static void setStatusBarPadding(Context context, View view) {
         int statusBarHeight = 0;//小于4.4的 不能使用沉浸式 所以这里默认设置0
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             statusBarHeight = StatusBarUtil.getStatusBarHeight(context);
         }
-        v.setPadding(0, statusBarHeight, 0, 0);
+        int bottom = view.getPaddingBottom();
+        int left = view.getPaddingLeft();
+        int right = view.getPaddingRight();
+        view.setPadding(left, statusBarHeight, right, bottom);
+    }
+
+    /**
+     * 隐藏Toppadding
+     *
+     * @param view
+     */
+    public static void hideStatusBarPadding(View view) {
+        int bottom = view.getPaddingBottom();
+        int left = view.getPaddingLeft();
+        int right = view.getPaddingRight();
+        view.setPadding(left, 0, right, bottom);
     }
 
     /**
      * 获取状态栏高度
+     * {@link StatusBarUtil#getStatusBarHeight()}
      *
      * @return 状态栏高度
      */
+    @Deprecated
     public static int getStatusBarHeight(Context context) {
+        return getStatusBarHeight();
+    }
+
+    public static int getStatusBarHeight() {
+        Resources resources = Resources.getSystem();
         int result = 0; //获取状态栏高度的资源id
-        int resourceId = context.getResources()
+        int resourceId = resources
                 .getIdentifier("status_bar_height", "dimen", "android");
         if (resourceId > 0) {
-            result = context.getResources().getDimensionPixelSize(resourceId);
+            result = resources.getDimensionPixelSize(resourceId);
         }
         return result;
     }

@@ -16,8 +16,10 @@ public class LightModeActivity extends AppCompatActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_light_mode);
         //BaseToolbar 的 setStatusBarColor()方法 和这个方法二选一即可，不然会多出一个状态栏高度
-        StatusBarUtil.setStatusBarColor(this,Color.WHITE);//设置状态栏颜色
-        StatusBarUtil.setStatusBarLightMode(this);//设置亮色模式 （即statusBar文字颜色变为黑色）
+   //     StatusBarUtil.setStatusBarColor(this,Color.WHITE);//设置状态栏颜色
+        StatusBarUtil.setTransparent(this );//设置状态栏颜色
+     //   StatusBarUtil.setImmersiveTransparentStatusBar(this );//设置状态栏颜色
+   //     StatusBarUtil.setStatusBarLightMode(this);//设置亮色模式 （即statusBar文字颜色变为黑色）
 
         findViewById(R.id.mBtnNone).setOnClickListener(this);
         findViewById(R.id.mBtnUseSystem).setOnClickListener(this);

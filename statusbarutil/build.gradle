@@ -36,7 +36,7 @@ publish {
     userOrg = 'mirkowu'
     groupId = 'com.mirkowu'
     artifactId = 'StatusBarUtil'
-    publishVersion = '0.0.4'
+    publishVersion = '0.0.6'
     desc = ' easy and useful StatusBarUtil '
     website = "https://github.com/mirkowu/StatusBarUtil"
 }
